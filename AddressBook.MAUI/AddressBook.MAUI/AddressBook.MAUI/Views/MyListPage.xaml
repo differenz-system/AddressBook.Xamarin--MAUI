@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AddressBook.MAUI.Views.MyListPage"
+              xmlns:viewmodel="clr-namespace:AddressBook.MAUI.ViewModels"
+             xmlns:customControls="clr-namespace:AddressBook.MAUI.CustomControls"
+             xmlns:behaviors="clr-namespace:AddressBook.MAUI.Behavior"
+             xmlns:Services="clr-namespace:AddressBook.MAUI.Services"
+             xmlns:resources="clr-namespace:AddressBook.MAUI.LanguageResources"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="False"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             ControlTemplate="{StaticResource HeaderTemplate}"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewmodel:MyListPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" />
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Spacing="0">
+            <ContentView Padding="{Static Services:LayoutService.MarginPadding20}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsVisibleMessage}">
+                <Label Text="{Static resources:AppResources.TEXT_NO_DATA}" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Style="{StaticResource Size14BlackLabelStyle}"/>
+            </ContentView>
+            <ListView x:Name="MyList" VerticalScrollBarVisibility="Never" SeparatorVisibility="None" VerticalOptions="FillAndExpand" HasUnevenRows="True" IsGroupingEnabled="True" GroupShortNameBinding="{Binding Key}" GroupDisplayBinding="{Binding Key}" ItemsSource="{Binding Items}" Margin="0">
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <StackLayout Grid.Row="0" Opacity="0.6" Padding="{Static Services:LayoutService.MarginPadding10}" BackgroundColor="{StaticResource SecondaryColor}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                    <StackLayout.Background>
+                                        <LinearGradientBrush EndPoint="1,1" >
+                                            <GradientStop Color="{StaticResource SecondaryColor}" Offset="0.1" />
+                                            <GradientStop Color="{StaticResource PrimaryColor}" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </StackLayout.Background>
+                                </StackLayout>
+                                <Label Grid.Row="0" Text="{Binding Key}" Style="{StaticResource Size16BlackBoldLabelStyle}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" Margin="{Static Services:LayoutService.MarginPadding10}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <SwipeView BackgroundColor="Transparent">
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItemView Command="{Binding Path=BindingContext.DeleteItemCommand, Source={x:Reference MyList}}" CommandParameter="{Binding .}">
+                                            <Border WidthRequest="{Static Services:LayoutService.HeightWidth100}" Margin="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="0, 15, 0, 15" />
+                                                </Border.StrokeShape>
+                                                <Image Aspect="AspectFit" WidthRequest="{Static Services:LayoutService.HeightWidth30}" HeightRequest="{Static Services:LayoutService.HeightWidth30}" HorizontalOptions="CenterAndExpand" Source="delete" VerticalOptions="CenterAndExpand" />
+                                            </Border>
+                                        </SwipeItemView>
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Border StrokeThickness="0" Margin="{Static Services:LayoutService.MarginPadding15}" Padding="0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="15, 15, 15, 15" />
+                                    </Border.StrokeShape>
+                                    <Border.Shadow>
+                                        <Shadow Radius="10" Opacity="0.1" Offset="-7,-7" Brush="{StaticResource PrimaryColor}" ></Shadow>
+                                    </Border.Shadow>
+                                    <StackLayout Spacing="0" Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{AppThemeBinding Dark=#101010, Light={StaticResource WhiteColor}}">
+                                        <Frame WidthRequest="10" CornerRadius="0" BackgroundColor="{StaticResource PrimaryColor}" HasShadow="False" HorizontalOptions="Start" Padding="0" >
+                                            <Frame.Background>
+                                                <LinearGradientBrush EndPoint="1,1" >
+                                                    <GradientStop Color="{StaticResource SecondaryColor}" Offset="0.1" />
+                                                    <GradientStop Color="{StaticResource PrimaryColor}" Offset="1.0" />
+                                                </LinearGradientBrush>
+                                            </Frame.Background>
+                                        </Frame>
+                                        <StackLayout BackgroundColor="{AppThemeBinding Dark={StaticResource LightBlackColor}, Light={StaticResource WhiteColor}}" Padding="{Static Services:LayoutService.MarginPadding15}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="{Static Services:LayoutService.Spacing10}">
+                                            <Label Text="{Binding Name}" Style="{StaticResource Size20BlackBoldLabelStyle}" />
+                                            <Label CharacterSpacing="1.1" Opacity="0.9" Text="{Binding EmailAddress}" Style="{StaticResource Size14BlackLabelStyle}" />
+                                            <Label CharacterSpacing="1.1" Opacity="0.9" Text="{Binding ContactNumber}" Style="{StaticResource Size14BlackLabelStyle}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference MyList}, Path=BindingContext.SelectItemCommand}" CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </SwipeView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

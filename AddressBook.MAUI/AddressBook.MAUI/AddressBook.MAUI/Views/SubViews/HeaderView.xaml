@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AddressBook.MAUI.Views.SubViews.HeaderView"
+             xmlns:Services="clr-namespace:AddressBook.MAUI.Services"
+             xmlns:customControls="clr-namespace:AddressBook.MAUI.CustomControls"
+             xmlns:resources="clr-namespace:AddressBook.MAUI.LanguageResources"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             >
+    <ContentView.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="0" Margin="0" Padding="0" >
+            <Border Margin="0"
+                    Padding="0"
+                    StrokeThickness="0"
+                    BackgroundColor="#1B4F72"
+                    Stroke="#1B4F72">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="0, 0, 20, 20" />
+                </Border.StrokeShape>
+                <Grid ColumnSpacing="5" HeightRequest="200" RowSpacing="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Image Source="background" Aspect="AspectFill" HeightRequest="200" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+
+                    <ImageButton Grid.Row="0" Grid.Column="0" VerticalOptions="Start" HorizontalOptions="Start" Command="{Binding LeftCommand}"  HeightRequest="{Static Services:LayoutService.HeightWidth30}" WidthRequest="{Static Services:LayoutService.HeightWidth30}" Margin="{Static Services:LayoutService.MarginPadding20_20_00_00}" >
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="FA_Solid" Glyph="{Binding LeftText}" Size="{x:Static Services:LayoutService.FontSize30}" Color="{StaticResource WhiteColor}" />
+                        </ImageButton.Source>
+                    </ImageButton>
+                    <Label Grid.Row="0" Grid.ColumnSpan="3" Text="{Binding HeaderText}" FontSize="25" Style="{StaticResource Size20WhiteBoldLabelStyle}" TextColor="White" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"  />
+                    <ImageButton Grid.Row="0" Grid.Column="2" VerticalOptions="Start" HorizontalOptions="End" Command="{Binding RightCommand}"  HeightRequest="{Static Services:LayoutService.HeightWidth30}" WidthRequest="{Static Services:LayoutService.HeightWidth30}" Margin="{Static Services:LayoutService.MarginPadding00_20_20_00}" >
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="FA_Solid" Glyph="{Binding RightText}" Size="{x:Static Services:LayoutService.FontSize25}" Color="{StaticResource WhiteColor}" />
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Grid>
+                <Border.Shadow>
+                    <Shadow Brush="#1B2631" Offset="0,5" Opacity="0.2" />
+                </Border.Shadow>
+            </Border>
+            <BoxView IsVisible="{Binding IsVisiblesearchEntry}" BackgroundColor="Transparent" HeightRequest="{Static Services:LayoutService.HeightWidth40}" />
+            <Border IsVisible="{Binding IsVisiblesearchEntry}"  BackgroundColor="{AppThemeBinding Dark={StaticResource LightBlackColor}, Light={StaticResource WhiteColor}}" Margin="40,-75,40,30" Padding="{Static Services:LayoutService.MarginPadding10_00_10_00}" >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="25, 25, 25, 25" />
+                </Border.StrokeShape>
+                <customControls:CustomEntry Text="{Binding SearchText}" FontSize="{x:Static Services:LayoutService.FontSize18}" Keyboard="Email" Placeholder="{Static resources:AppResources.PLACEHOLDER_SEARCH_CONTACT}" Margin="5" HorizontalOptions="FillAndExpand" BorderWidth="0" BorderColor="Transparent">
+                    <customControls:CustomEntry.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="TextChanged" Command="{Binding SearchContactCommand}" CommandParameter="{Binding SearchText}" />
+                    </customControls:CustomEntry.Behaviors>
+                </customControls:CustomEntry>
+                <Border.Shadow>
+                    <Shadow Radius="10" Offset="0,5" Opacity="0.2" Brush="{StaticResource PrimaryColor}" ></Shadow>
+                </Border.Shadow>
+            </Border>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

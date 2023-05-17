@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AddressBook.MAUI.Views.MyDetailsPage"
+             xmlns:viewmodel="clr-namespace:AddressBook.MAUI.ViewModels"
+             xmlns:customControls="clr-namespace:AddressBook.MAUI.CustomControls"
+             xmlns:behaviors="clr-namespace:AddressBook.MAUI.Behavior"
+             xmlns:Services="clr-namespace:AddressBook.MAUI.Services"
+             xmlns:resources="clr-namespace:AddressBook.MAUI.LanguageResources"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="False"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             ControlTemplate="{StaticResource HeaderTemplate}"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.BindingContext>
+        <viewmodel:MyDetailPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" />
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout x:Name="MainStackLayout" VerticalOptions="CenterAndExpand" Padding="{Static Services:LayoutService.MarginPadding50}" Spacing="{Static Services:LayoutService.Spacing20}">
+                <Label Text="{Static resources:AppResources.TEXT_NAME}" Style="{StaticResource Size16BlackBoldLabelStyle}"/>
+                <customControls:CustomEntry x:Name="nameEntry" Text="{Binding Name}" Placeholder="{Static resources:AppResources.PLACEHOLDER_USERNAME}" >
+                    <customControls:CustomEntry.Behaviors>
+                        <behaviors:AnimateSizeBehavior />
+                    </customControls:CustomEntry.Behaviors>
+                    <customControls:CustomEntry.Shadow>
+                        <Shadow Radius="5" Offset="0,10" Opacity="0.3" Brush="{StaticResource DarkBlueColor}" ></Shadow>
+                    </customControls:CustomEntry.Shadow>
+                </customControls:CustomEntry>
+                <Label Text="{Static resources:AppResources.TEXT_EMAIL}" Style="{StaticResource Size16BlackBoldLabelStyle}"/>
+                <customControls:CustomEntry x:Name="emailEntry" Text="{Binding EmailAddress}" Keyboard="Email" Placeholder="{Static resources:AppResources.PLACEHOLDER_EMAIL}" >
+                    <customControls:CustomEntry.Behaviors>
+                        <behaviors:AnimateSizeBehavior />
+                    </customControls:CustomEntry.Behaviors>
+                    <customControls:CustomEntry.Shadow>
+                        <Shadow Radius="5" Offset="0,10" Opacity="0.3" Brush="{StaticResource DarkBlueColor}" ></Shadow>
+                    </customControls:CustomEntry.Shadow>
+                </customControls:CustomEntry>
+                <Label Text="{Static resources:AppResources.TEXT_CONTACT_NUMBER}" Style="{StaticResource Size16BlackBoldLabelStyle}"/>
+                <customControls:CustomEntry x:Name="contactEntry" Text="{Binding ContactNumber}" Keyboard="Telephone" Placeholder="{Static resources:AppResources.PLACEHOLDER_CONTACT_NO}">
+                    <customControls:CustomEntry.Behaviors>
+                        <behaviors:AnimateSizeBehavior />
+                    </customControls:CustomEntry.Behaviors>
+                    <customControls:CustomEntry.Shadow>
+                        <Shadow Radius="5" Offset="0,10" Opacity="0.3" Brush="{StaticResource DarkBlueColor}" ></Shadow>
+                    </customControls:CustomEntry.Shadow>
+                </customControls:CustomEntry>
+                <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Start" Orientation="Horizontal" Spacing="{Static Services:LayoutService.Spacing30}" Padding="{Static Services:LayoutService.MarginPadding00_10_00_00}">
+                    <Label Text="{Static resources:AppResources.TEXT_ACTIVE}" Style="{StaticResource Size16BlackBoldLabelStyle}" VerticalOptions="Center"/>
+                    <Switch x:Name="doneEntry" IsToggled="{Binding Active}" HorizontalOptions="Start" OnColor="{StaticResource PrimaryColor}"/>
+                </StackLayout>
+                <Button Text="{Binding SaveButtonText}" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand" Margin="{Static Services:LayoutService.MarginPadding00_10_00_00}">
+                </Button>
+                <Button Text="{Binding DeleteButtonText}" Command="{Binding DeleteCommand}" HorizontalOptions="FillAndExpand">
+                </Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
