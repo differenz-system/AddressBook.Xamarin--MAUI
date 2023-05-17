@@ -1,6 +1,7 @@
-# AddressBook.MAUI
+# AddressBook migration from Xamarin.Forms to .Net MAUI
+
 ## Overview
-This repository contains **Address Book** application for Microsoft.Maui (.Net 7.0) that shows design & coding practices followed by **[Differenz System](http://www.differenzsystem.com/)**. 
+This repository contains **Address Book** application for Microsoft.Maui (.Net 7.0) which is migration of Xamarin.Forms and that shows design & coding practices followed by **[Differenz System](http://www.differenzsystem.com/)**. 
 
 The app does the following:
 1. **Login:** 
@@ -41,15 +42,23 @@ The app does the following:
 
 - **Others:** [Microsoft.Maui](7.0.52), [.NET 7.0](https://www.microsoft.com/net/learn/get-started/macos) (7.0), [Microsoft.Android] (33.0.4), Microsoft.iOS (16.1.1481)
 
-## Screenshots
+## Xamarin.Forms Screenshots
 ### Android
-<img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/Android/login.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/Android/list.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/Android/detail.png" width="280">  
+<img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.Xamarin/ScreenShots/Android/login.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.Xamarin/ScreenShots/Android/list.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.Xamarin/ScreenShots/Android/detail.png" width="280">  
 
 ### iOS
-<img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/iOS/login.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/iOS/list.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/iOS/detail.png" width="280">
+<img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.Xamarin/ScreenShots/iOS/login.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.Xamarin/ScreenShots/iOS/list.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.Xamarin/ScreenShots/iOS/detail.png" width="280">
+
+
+## .Net MAUI Screenshots
+### Android
+<img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/Android/login.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/Android/list.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/Android/detail.png" width="280">  
+
+### iOS
+<img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/iOS/login.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/iOS/list.png" width="280"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/iOS/detail.png" width="280">
 
 ### Mac Catalyst
-<img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/MacCatalyst/login.png" width="300"> <img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/MacCatalyst/list.png" width="300"> <img src="https://github.com/differenz-system/AddressBook.MAUI/blob/main/ScreenShots/MacCatalyst/detail.png" width="300">
+<img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/MacCatalyst/login.png" width="300"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/MacCatalyst/list.png" width="300"> <img src="https://github.com/differenz-system/AddressBook.Xamarin--MAUI/blob/main/AddressBook.MAUI/ScreenShots/MacCatalyst/detail.png" width="300">
 
 ## Support
 If you've found an error in this sample, please [report an issue](https://github.com/differenz-system/AddressBook.MAUI/issues/new). You can also send your feedback and suggestions at info@differenzsystem.com
