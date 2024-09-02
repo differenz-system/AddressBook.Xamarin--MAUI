@@ -7,13 +7,13 @@ namespace DifferenzXamarinDemo.Views
         public MyListPage()
         {
             InitializeComponent();
-            MyList.ScaleTo(0);
+            //MyList.ScaleTo(0);
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await MyList.ScaleTo(1, 250, Easing.Linear);
+            //await MyList.ScaleTo(1, 250, Easing.Linear);
         }
     }
 }

@@ -12,14 +12,8 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              ControlTemplate="{StaticResource HeaderTemplate}"
              NavigationPage.HasNavigationBar="False">
-    <ContentPage.BindingContext>
-        <viewmodel:MyListPageViewModel />
-    </ContentPage.BindingContext>
-    <ContentPage.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="White" />
-    </ContentPage.Behaviors>
     <ContentPage.Content>
-        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Spacing="0">
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackColor}, Light={StaticResource WhiteColor}}" Spacing="0">
             <ContentView Padding="{Static Services:LayoutService.MarginPadding20}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsVisibleMessage}">
                 <Label Text="{Static resources:AppResources.TEXT_NO_DATA}" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Style="{StaticResource Size14BlackLabelStyle}"/>
             </ContentView>

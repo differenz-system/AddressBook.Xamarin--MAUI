@@ -7,6 +7,7 @@ using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Platform;
 using UIKit;
+using System.Diagnostics;
 
 [assembly: ExportRenderer(typeof(CustomEntry), typeof(CustomEntryRenderer))]
 namespace AddressBook.MAUI.Platforms.iOS.Renderers
@@ -21,24 +22,35 @@ namespace AddressBook.MAUI.Platforms.iOS.Renderers
         {
             base.OnElementChanged(e);
 
-            if (e.NewElement != null)
+            try
             {
-                var view = (CustomEntry)Element;
+                if (e.NewElement != null)
+                {
+                    var view = (CustomEntry)Element;
 
-                Control.LeftView = new UIView(new CGRect(0f, 0f, 0f, 0f));
+                    Control.LeftView = new UIView(new CGRect(0f, 0f, 0f, 0f));
 
-                Control.LeftViewMode = UITextFieldViewMode.Always;
+                    Control.LeftViewMode = UITextFieldViewMode.Always;
 
-                Control.KeyboardAppearance = UIKeyboardAppearance.Dark;
-                Control.ReturnKeyType = UIReturnKeyType.Done;
-                // Radius for the curves  
-                Control.Layer.CornerRadius = Convert.ToSingle(view.CornerRadius);
-                // Thickness of the Border Color  
-                Control.Layer.BorderColor = view.BorderColor.ToCGColor();
-                // Thickness of the Border Width  
-                Control.Layer.BorderWidth = view.BorderWidth;
-                Control.ClipsToBounds = true;
-                Control.Placeholder = view.Placeholder;
+                    Control.KeyboardAppearance = UIKeyboardAppearance.Dark;
+                    Control.ReturnKeyType = UIReturnKeyType.Done;
+                    // Radius for the curves  
+                    Control.Layer.CornerRadius = Convert.ToSingle(view.CornerRadius);
+                    // Thickness of the Border Color  
+                    Control.Layer.BorderColor = view.BorderColor.ToCGColor();
+                    // Thickness of the Border Width  
+                    Control.Layer.BorderWidth = view.BorderWidth;
+                if (view.BorderWidth == 0)
+                {
+                    Control.BorderStyle = UIKit.UITextBorderStyle.None;
+                }
+                    Control.ClipsToBounds = true;
+                    Control.Placeholder = view.Placeholder;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

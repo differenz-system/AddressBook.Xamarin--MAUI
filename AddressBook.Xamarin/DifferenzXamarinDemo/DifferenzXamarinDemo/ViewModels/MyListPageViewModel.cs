@@ -156,7 +156,7 @@ namespace DifferenzXamarinDemo.ViewModels
         {
             var param = new NavigationParameters();
             param.Add("userdata", userData);
-            await _navigationService.NavigateAsync($"{nameof(MyDetailPage)}", param);
+            await _navigationService.NavigateAsync(nameof(MyDetailPage), param);
         }
 
         /// <summary>
@@ -166,11 +166,11 @@ namespace DifferenzXamarinDemo.ViewModels
         {
             try
             {
-                await _navigationService.NavigateAsync($"{nameof(MyDetailPage)}");
+                await _navigationService.NavigateAsync(nameof(MyDetailPage));
             }
             catch (Exception ex)
             {
-
+                 TelemetryService.Instance.Record(ex);
             }
         }
         #endregion

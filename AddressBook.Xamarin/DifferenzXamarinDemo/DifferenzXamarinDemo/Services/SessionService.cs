@@ -55,7 +55,7 @@ namespace DifferenzXamarinDemo.Services
 
             SettingsService.IsLoggedIn = false;
             SettingsService.LoggedInUserEmail = string.Empty;
-            await App.AppNavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(LoginPage)}");
+            await App.AppNavigationService.NavigateAsync(nameof(LoginPage));
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace DifferenzXamarinDemo.Services
         public static async void AutoLogin()
         {
             SettingsService.IsLoggedIn = true;
-            await App.AppNavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MyListPage)}");
+            await App.AppNavigationService.NavigateAsync(nameof(MyListPage));
         }
 
         #endregion

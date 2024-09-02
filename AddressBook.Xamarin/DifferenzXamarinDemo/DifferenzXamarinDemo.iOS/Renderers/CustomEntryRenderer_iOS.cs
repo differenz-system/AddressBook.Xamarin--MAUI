@@ -31,6 +31,12 @@ namespace DifferenzXamarinDemo.iOS.Renderers
                 Control.Layer.BorderColor = view.BorderColor.ToCGColor();
                 // Thickness of the Border Width  
                 Control.Layer.BorderWidth = view.BorderWidth;
+
+                if (view.BorderWidth == 0)
+                {
+                    Control.BorderStyle = UIKit.UITextBorderStyle.None;
+                }
+
                 Control.ClipsToBounds = true;
             }
         }

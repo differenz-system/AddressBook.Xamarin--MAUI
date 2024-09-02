@@ -19,7 +19,7 @@ namespace DifferenzXamarinDemo
 
         public static INavigationService AppNavigationService { get; set; }
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
             InitializeComponent();
             Device.SetFlags(new[] { "SwipeView_Experimental", "AppTheme_Experimental" });
@@ -34,7 +34,7 @@ namespace DifferenzXamarinDemo
             }
             else
             {
-                NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(LoginPage)}").Wait();
+                await NavigationService.NavigateAsync(nameof(LoginPage));
             }
         }
 

@@ -4,8 +4,6 @@ namespace AddressBook.MAUI.Views;
 
 public partial class MyListPage : ContentPage
 {
-    private MyListPageViewModel ViewModel => BindingContext as MyListPageViewModel;
-
     public MyListPage()
     {
         InitializeComponent();
@@ -15,6 +13,5 @@ public partial class MyListPage : ContentPage
     {
         base.OnAppearing();
         await MyList.ScaleTo(1, 250, Easing.Linear);
-        ViewModel.OnNavigatedTo();
     }
 }

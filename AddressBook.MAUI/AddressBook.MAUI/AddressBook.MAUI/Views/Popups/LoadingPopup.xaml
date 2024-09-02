@@ -5,6 +5,7 @@
                   x:Class="AddressBook.MAUI.Views.Popups.LoadingPopup"
                   xmlns:Services="clr-namespace:AddressBook.MAUI.Services"
                   xmlns:animations="clr-namespace:Mopups.Animations;assembly=Mopups"
+                  BackgroundColor="#99000000"
                   CloseWhenBackgroundIsClicked="False">
     <pages:PopupPage.Resources>
         <ResourceDictionary />

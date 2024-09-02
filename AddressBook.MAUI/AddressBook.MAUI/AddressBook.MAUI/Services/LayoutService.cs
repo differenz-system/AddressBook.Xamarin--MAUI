@@ -247,7 +247,7 @@ namespace AddressBook.MAUI.Services
             }
             catch (Exception exception)
             {
-                Debug.WriteLine("LayoutService ==> sizeConvertAsPerDevice \n\n" + exception.Message);
+                Console.WriteLine("LayoutService ==> sizeConvertAsPerDevice \n\n" + exception.Message);
             }
             return size;
         }
@@ -304,7 +304,7 @@ namespace AddressBook.MAUI.Services
             }
             catch (Exception exception)
             {
-                Debug.WriteLine("LayoutService ==> MarginPaddingConvertAsPerDevice \n\n" + exception.Message);
+                Console.WriteLine("LayoutService ==> MarginPaddingConvertAsPerDevice \n\n" + exception.Message);
             }
             return new Thickness(left, top, right, bottom);
         }

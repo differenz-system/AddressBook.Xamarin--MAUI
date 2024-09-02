@@ -4,14 +4,17 @@ using AddressBook.MAUI.Models;
 using AddressBook.MAUI.Services;
 using AddressBook.MAUI.Views.Popups;
 using Mopups.Pages;
+using Prism.Mvvm;
+using Prism.Navigation;
 
 namespace AddressBook.MAUI.ViewModels
 {
-    public class BaseViewModel : BindableBase
+    public class BaseViewModel : BindableBase, INavigationAware
     {
         #region Constructor
-        public BaseViewModel()
+        public BaseViewModel(INavigationService navigationService)
         {
+            this.navigationService = navigationService;
         }
         #endregion
 
@@ -20,6 +23,9 @@ namespace AddressBook.MAUI.ViewModels
         #endregion
 
         #region Public Properties
+
+        public INavigationService navigationService { get; set; }
+
         public HeaderModel CurrentHeader
         {
             get { return _currentHeader; }
@@ -28,7 +34,7 @@ namespace AddressBook.MAUI.ViewModels
         #endregion
 
         #region Commands
-        public Command LogoutCommand { get { return new Command(() => SessionService.Logout()); } }
+        public DelegateCommand LogoutCommand { get { return new DelegateCommand(() => SessionService.Logout()); } }
         #endregion
 
         #region Private Methods
@@ -45,7 +51,7 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("BindableBase ==> ShowPopup \n\n" + ex.Message);
+                Console.WriteLine("BindableBase ==> ShowPopup \n\n" + ex.Message);
             }
         }
 
@@ -60,7 +66,7 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("BindableBase ==> ShowLoader \n\n" + ex.Message);
+                Console.WriteLine("BindableBase ==> ShowLoader \n\n" + ex.Message);
             }
         }
 
@@ -75,7 +81,7 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("BindableBase ==> ClosePopup \n\n" + ex.Message);
+                Console.WriteLine("BindableBase ==> ClosePopup \n\n" + ex.Message);
             }
         }
 
@@ -91,7 +97,7 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("BindableBase ==> DisplayAlertAsync \n\n" + ex.Message);
+                Console.WriteLine("BindableBase ==> DisplayAlertAsync \n\n" + ex.Message);
             }
         }
 
@@ -103,9 +109,19 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("BindableBase ==> CheckConnectivity \n\n" + ex.Message);
+                Console.WriteLine("BindableBase ==> CheckConnectivity \n\n" + ex.Message);
                 return false;
             }
+        }
+
+        public virtual void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            
+        }
+
+        public virtual void OnNavigatedTo(INavigationParameters parameters)
+        {
+            
         }
 
         #endregion

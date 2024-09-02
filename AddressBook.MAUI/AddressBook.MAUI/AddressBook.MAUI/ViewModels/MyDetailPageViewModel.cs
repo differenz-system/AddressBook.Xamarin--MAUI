@@ -4,13 +4,15 @@ using AddressBook.MAUI.LanguageResources;
 using System.Text.RegularExpressions;
 using AddressBook.MAUI.Services;
 using System.Diagnostics;
+using Prism.Navigation;
+using AddressBook.MAUI.Views;
 
 namespace AddressBook.MAUI.ViewModels
 {
     public class MyDetailPageViewModel : BaseViewModel
     {
         #region Constructor
-        public MyDetailPageViewModel()
+        public MyDetailPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             CurrentHeader = new HeaderModel();
             CurrentHeader.HeaderText = AppResources.TEXT_DETAIL;
@@ -78,12 +80,12 @@ namespace AddressBook.MAUI.ViewModels
 
         #region Commands
 
-        public Command SaveCommand { get { return new Command(() => Save()); } }
-        public Command DeleteCommand
+        public DelegateCommand SaveCommand { get { return new DelegateCommand(() => Save()); } }
+        public DelegateCommand DeleteCommand
         {
             get
             {
-                return new Command(() =>
+                return new DelegateCommand(() =>
                 {
                     if (Id > 0)
                     {
@@ -96,7 +98,7 @@ namespace AddressBook.MAUI.ViewModels
                 });
             }
         }
-        public Command BackCommand { get { return new Command(() => Cancel()); } }
+        public DelegateCommand BackCommand { get { return new DelegateCommand(() => Cancel()); } }
 
         #endregion
 
@@ -131,7 +133,7 @@ namespace AddressBook.MAUI.ViewModels
                     DatabaseService.SaveItem(userData);
                     await ClosePopup();
                     await DisplayAlertAsync(AppResources.TITLE_SUCCESS, SaveButtonText == AppResources.TEXT_SAVE ? AppResources.MESSAGE_SUCCESS_DATA_SAVE : AppResources.MESSAGE_SUCCESS_DATA_UPDATED, AppResources.TEXT_OK);
-                    await App.Current.MainPage.Navigation.PopAsync();
+                    await navigationService.NavigateAsync($"/{nameof(MyListPage)}");
                 }
                 else
                 {
@@ -140,7 +142,8 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("MyDetailPageViewModel ==> Save \n\n" + ex.Message);
+                Console.WriteLine("MyDetailPageViewModel ==> Save \n\n" + ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -153,13 +156,14 @@ namespace AddressBook.MAUI.ViewModels
                     await ShowLoader(true);
                     DatabaseService.DeleteItem(Id);
                     await ClosePopup();
-                    await App.Current.MainPage.Navigation.PopAsync();
+                    await navigationService.NavigateAsync($"/{nameof(MyListPage)}");
                 }
             }
             catch (Exception ex)
             {
                 await ClosePopup();
-                Debug.WriteLine("MyDetailPageViewModel ==> Delete \n\n" + ex.Message);
+                Console.WriteLine("MyDetailPageViewModel ==> Delete \n\n" + ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -167,18 +171,45 @@ namespace AddressBook.MAUI.ViewModels
         {
             try
             {
-                await App.Current.MainPage.Navigation.PopAsync();
+                await navigationService.NavigateAsync($"/{nameof(MyListPage)}");
             }
             catch (Exception ex)
             {
                 await ClosePopup();
-                Debug.WriteLine("MyDetailPageViewModel ==> Cancel \n\n" + ex.Message);
+                Console.WriteLine("MyDetailPageViewModel ==> Cancel \n\n" + ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
         #endregion
 
         #region Public methods
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
 
+            try
+            {
+                if (parameters != null && parameters.ContainsKey("userdata"))
+                {
+                    UserData userData = (UserData)parameters["userdata"];
+                    if (userData != null)
+                    {
+                        Name = userData.Name;
+                        Id = userData.ID;
+                        Active = userData.Active;
+                        ContactNumber = userData.ContactNumber;
+                        EmailAddress = userData.EmailAddress;
+                    }
+                }
+
+                SaveButtonText = Id == 0 ? AppResources.TEXT_SAVE : AppResources.TEXT_UPDATE;
+                DeleteButtonText = Id == 0 ? AppResources.TEXT_CANCEL : AppResources.TEXT_DELETE;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         #endregion
     }
 }

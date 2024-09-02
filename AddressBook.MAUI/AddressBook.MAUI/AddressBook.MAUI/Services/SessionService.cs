@@ -1,5 +1,6 @@
 ﻿using System;
 using AddressBook.MAUI.Views;
+using Prism.Navigation;
 
 namespace AddressBook.MAUI.Services
 {
@@ -22,6 +23,8 @@ namespace AddressBook.MAUI.Services
             @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
 
         public static readonly string PHONE_NO_REGEX = @"\d{10}";
+
+        public static INavigationService navigationService { get; set; }
         #endregion
 
 
@@ -31,17 +34,31 @@ namespace AddressBook.MAUI.Services
 
 
         #region Public methods
-        public static void AutoLogin()
+        public static async void AutoLogin()
         {
-            SettingsService.IsLoggedIn = true;
-            App.Current.MainPage = new NavigationPage(new MyListPage());
+            try
+            {
+                SettingsService.IsLoggedIn = true;
+                await navigationService.NavigateAsync($"/{nameof(MyListPage)}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }            
         }
 
-        public static void Logout()
+        public static async void Logout()
         {
-            SettingsService.IsLoggedIn = false;
-            SettingsService.LoggedInUserEmail = string.Empty;
-            App.Current.MainPage = new NavigationPage(new LoginPage());
+            try
+            {
+                SettingsService.IsLoggedIn = false;
+                SettingsService.LoggedInUserEmail = string.Empty;
+                await navigationService.NavigateAsync($"/{nameof(LoginPage)}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         #endregion
     }

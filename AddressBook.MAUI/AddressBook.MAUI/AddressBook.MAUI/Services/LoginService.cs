@@ -39,7 +39,7 @@ namespace AddressBook.MAUI.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
                 UDI.Errors = AppResources.MESSAGE_ERROR_SOMETHING_WENT_WRONG_WITH_USER_LOGIN;
             }
             return UDI;

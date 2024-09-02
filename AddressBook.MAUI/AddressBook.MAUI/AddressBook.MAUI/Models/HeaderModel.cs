@@ -12,11 +12,11 @@ namespace AddressBook.MAUI.Models
 
         private string _rightText = "";
 
-        private Command _leftCommand = null;
+        private DelegateCommand _leftCommand = null;
 
-        private Command _rightCommand = null;
+        private DelegateCommand _rightCommand = null;
 
-        private Command<string> _searchContactCommand = null;
+        private DelegateCommand<string> _searchContactCommand = null;
 
         private bool _isVisibleSearchEntry = false;
 
@@ -43,13 +43,13 @@ namespace AddressBook.MAUI.Models
             set { SetProperty(ref _rightText, value); }
         }
 
-        public Command LeftCommand
+        public DelegateCommand LeftCommand
         {
             get { return _leftCommand; }
             set { SetProperty(ref _leftCommand, value); }
         }
 
-        public Command RightCommand
+        public DelegateCommand RightCommand
         {
             get { return _rightCommand; }
             set { SetProperty(ref _rightCommand, value); }
@@ -61,7 +61,7 @@ namespace AddressBook.MAUI.Models
             set { SetProperty(ref _isVisibleSearchEntry, value); }
         }
 
-        public Command<string> SearchContactCommand
+        public DelegateCommand<string> SearchContactCommand
         {
             get { return _searchContactCommand; }
             set { SetProperty(ref _searchContactCommand, value); }

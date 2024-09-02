@@ -5,13 +5,14 @@ using System.Collections.ObjectModel;
 using AddressBook.MAUI.Services;
 using System.Diagnostics;
 using AddressBook.MAUI.Views;
+using Prism.Navigation;
 
 namespace AddressBook.MAUI.ViewModels
 {
     public class MyListPageViewModel : BaseViewModel
     {
         #region Constructor
-        public MyListPageViewModel()
+        public MyListPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             CurrentHeader = new HeaderModel();
             CurrentHeader.HeaderText = AppResources.Text_ADDRESS_BOOK;
@@ -61,13 +62,13 @@ namespace AddressBook.MAUI.ViewModels
 
         #region Commands
 
-        public Command<UserData> DeleteItemCommand { get { return new Command<UserData>((obj) => DeleteAddress(obj)); } }
-        public Command<UserData> SelectItemCommand { get { return new Command<UserData>((obj) => ViewAddress(obj)); } }
-        public Command AddCommand { get { return new Command(Add); } }
+        public DelegateCommand<UserData> DeleteItemCommand { get { return new DelegateCommand<UserData>((obj) => DeleteAddress(obj)); } }
+        public DelegateCommand<UserData> SelectItemCommand { get { return new DelegateCommand<UserData>((obj) => ViewAddress(obj)); } }
+        public DelegateCommand AddCommand { get { return new DelegateCommand(Add); } }
 
-        public Command<string> SearchContactCommand
+        public DelegateCommand<string> SearchContactCommand
         {
-            get { return new Command<string>(async (obj) => await DelayedQueryForKeyboardTypingSearches(obj).ConfigureAwait(false)); }
+            get { return new DelegateCommand<string>(async (obj) => await DelayedQueryForKeyboardTypingSearches(obj).ConfigureAwait(false)); }
         }
         #endregion
 
@@ -82,8 +83,9 @@ namespace AddressBook.MAUI.ViewModels
              TaskContinuationOptions.OnlyOnRanToCompletion,
              TaskScheduler.FromCurrentSynchronizationContext());
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -115,7 +117,7 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("MyListPageViewModel ==> SearchContact \n\n" + ex.Message);
+                Console.WriteLine("MyListPageViewModel ==> SearchContact \n\n" + ex.Message);
             }
         }
 
@@ -138,51 +140,43 @@ namespace AddressBook.MAUI.ViewModels
             catch (Exception ex)
             {
                 await ClosePopup();
-                Debug.WriteLine("MyListPageViewModel ==> DeleteAddress \n\n" + ex.Message);
+                Console.WriteLine("MyListPageViewModel ==> DeleteAddress \n\n" + ex.Message);
             }
         }
 
         async void ViewAddress(UserData userData)
         {
-            UserData data = new UserData();
-            data.ID = userData.ID;
-            data.EmailAddress = userData.EmailAddress;
-            data.ContactNumber = userData.ContactNumber;
-            data.Name = userData.Name;
-            data.Active = userData.Active;
-
-            await App.Current.MainPage.Navigation.PushAsync(new MyDetailsPage
+            try
             {
-                BindingContext = new MyDetailPageViewModel
-                {
-                    Id = userData.ID,
-                    EmailAddress = userData.EmailAddress,
-                    Name = userData.Name,
-                    Active = userData.Active,
-                    ContactNumber = userData.ContactNumber,
-                    SaveButtonText = userData.ID == 0 ? AppResources.TEXT_SAVE : AppResources.TEXT_UPDATE,
-                    DeleteButtonText = userData.ID == 0 ? AppResources.TEXT_CANCEL : AppResources.TEXT_DELETE
-                }
-            });
+                var param = new NavigationParameters();
+                param.Add("userdata", userData);
+                await navigationService.NavigateAsync($"/{nameof(MyDetailsPage)}", param);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         async void Add()
         {
             try
             {
-                await App.Current.MainPage.Navigation.PushAsync(new MyDetailsPage());
+                await navigationService.NavigateAsync($"/{nameof(MyDetailsPage)}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("MyListPageViewModel ==> Add \n\n" + ex.Message);
+                Console.WriteLine("MyListPageViewModel ==> Add \n\n" + ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
         #endregion
 
         #region Public methods
 
-        public void OnNavigatedTo()
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
+            base.OnNavigatedTo(parameters);
             try
             {
                 UserList = DatabaseService.GetAllItem(SettingsService.LoggedInUserEmail);
@@ -198,7 +192,7 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("MyListPageViewModel ==> OnNavigatedTo \n\n" + ex.Message);
+                Console.WriteLine("MyListPageViewModel ==> OnNavigatedTo \n\n" + ex.Message);
             }
         }
         #endregion

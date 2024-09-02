@@ -4,13 +4,14 @@ using System.Text.RegularExpressions;
 using AddressBook.MAUI.Models;
 using AddressBook.MAUI.Services;
 using AddressBook.MAUI.LanguageResources;
+using Prism.Navigation;
 
 namespace AddressBook.MAUI.ViewModels
 {
     public class LoginPageViewModel : BaseViewModel
     {
         #region Constructor
-        public LoginPageViewModel()
+        public LoginPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             CurrentHeader = new HeaderModel();
             CurrentHeader.HeaderText = "Login";
@@ -37,7 +38,7 @@ namespace AddressBook.MAUI.ViewModels
         #endregion
 
         #region Commands
-        public Command LoginCommand { get { return new Command(() => Login()); } }
+        public DelegateCommand LoginCommand { get { return new DelegateCommand(() => Login()); } }
         #endregion
 
         #region Private Methods
@@ -90,7 +91,7 @@ namespace AddressBook.MAUI.ViewModels
                     {
                         await ClosePopup();
                         SettingsService.LoggedInUserEmail = LoginData.ID.ToString();
-                        Debug.WriteLine($"Logged In User : {result.Email}");
+                        Console.WriteLine($"Logged In User : {result.Email}");
                         SessionService.AutoLogin();
                     }
                     else
@@ -108,7 +109,7 @@ namespace AddressBook.MAUI.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("LoginPageViewModel ==> Login \n\n" + ex.Message);
+                Console.WriteLine("LoginPageViewModel ==> Login \n\n" + ex.Message);
             }
         }
 
